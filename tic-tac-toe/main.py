@@ -24,7 +24,7 @@ font = pygame.font.Font(size=64)
 
 # Global variables
 clicked = False
-markers = [(1,1)]
+markers = []
 # Functions
 def print_grid():
     for x in range(math.ceil(SCREEN_WIDTH/CELL_SIZE)):
@@ -48,7 +48,30 @@ def print_markers():
 def add_marker():
     global clicked
     if clicked == True:
-        markers.append((2,1)) # Mocking this out for now
+        x,y = pygame.mouse.get_pos()
+        row = 0
+        column = 0
+
+        # Determine column
+        if(x < CELL_SIZE*2):
+            column = 1
+        elif(x < CELL_SIZE*3):
+            column = 2
+        elif(x < CELL_SIZE*4):
+            column = 3
+
+        # Determine row
+        if(y < CELL_SIZE*2):
+            row = 1
+        elif(y < CELL_SIZE*3):
+            row = 2
+        elif(y < CELL_SIZE*4):
+            row = 3
+        
+        if row and column:
+            markers.append((column, row))
+
+        
 # Main loop
 def main():
     global clicked
