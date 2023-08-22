@@ -24,7 +24,9 @@ font = pygame.font.Font(size=64)
 
 # Global variables
 clicked = False
-markers = []
+markers_x = []
+markers_o = []
+player_turn = True # True means 'X' False means 'O'
 # Functions
 def print_grid():
     for x in range(math.ceil(SCREEN_WIDTH/CELL_SIZE)):
@@ -39,15 +41,23 @@ def print_grid():
             # screen.blit(text, textRect)
 
 def print_markers():
-    for mark in markers:
+    for mark in markers_x:
         text = font.render("X", True, BLACK, WHITE)
+        textRect = text.get_rect()
+        textRect.center = (mark[0]*CELL_SIZE+(CELL_SIZE/2), mark[1]*CELL_SIZE+(CELL_SIZE/2))
+        screen.blit(text, textRect)
+    
+    for mark in markers_o:
+        text = font.render("O", True, BLACK, WHITE)
         textRect = text.get_rect()
         textRect.center = (mark[0]*CELL_SIZE+(CELL_SIZE/2), mark[1]*CELL_SIZE+(CELL_SIZE/2))
         screen.blit(text, textRect)
 
 def add_marker():
     global clicked
+    global player_turn
     if clicked == True:
+        clicked = False
         x,y = pygame.mouse.get_pos()
         row = 0
         column = 0
@@ -69,9 +79,13 @@ def add_marker():
             row = 3
         
         if row and column:
-            markers.append((column, row))
-
-        
+            print("X: ", markers_x)
+            print("O: ", markers_o)
+            if player_turn:
+                markers_x.append((column, row))
+            else:
+                markers_o.append((column, row))
+            player_turn = not player_turn
 # Main loop
 def main():
     global clicked
@@ -82,8 +96,6 @@ def main():
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN and clicked == False:
                 clicked = True
-            if event.type == pygame.MOUSEBUTTONUP and clicked == True:
-                clicked = False
 
         # Clear the screen
         screen.fill(WHITE)
