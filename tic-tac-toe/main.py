@@ -2,8 +2,8 @@ import pygame
 import math
 import sys
 
-# TODO Bind click events to grid and alter 'X' and 'O'
-
+# TODO Recognize win conditions
+# TODO Remove bug that overrides 'X' with 'O' if clicked twice. Will need to search markers to check that they're not already occupied.
 # Initialize Pygame
 pygame.init()
 
@@ -27,18 +27,13 @@ clicked = False
 markers_x = []
 markers_o = []
 player_turn = True # True means 'X' False means 'O'
+
 # Functions
 def print_grid():
     for x in range(math.ceil(SCREEN_WIDTH/CELL_SIZE)):
         for y in range(math.ceil(SCREEN_HEIGHT/CELL_SIZE)):
             pygame.draw.line(screen, BLACK, (x*CELL_SIZE, CELL_SIZE), (x*CELL_SIZE,SCREEN_HEIGHT-CELL_SIZE))
             pygame.draw.line(screen, BLACK, (CELL_SIZE, y*CELL_SIZE), (SCREEN_WIDTH-CELL_SIZE,y*CELL_SIZE))
-
-            # REVIEW: Remove, using for grid debugging purposes
-            # text = font.render(str((x,y)),True, BLACK, WHITE)
-            # textRect = text.get_rect()
-            # textRect.center = (x*CELL_SIZE+(CELL_SIZE/2), y*CELL_SIZE+(CELL_SIZE/2))
-            # screen.blit(text, textRect)
 
 def print_markers():
     for mark in markers_x:
@@ -79,8 +74,6 @@ def add_marker():
             row = 3
         
         if row and column:
-            print("X: ", markers_x)
-            print("O: ", markers_o)
             if player_turn:
                 markers_x.append((column, row))
             else:
@@ -103,17 +96,7 @@ def main():
         print_grid()
         print_markers()
         add_marker()
-        """
-            if user clicks on box:
-                if box is empty:
-                    if state is 'x':
-                        render 'x' in box
-                    else:
-                        render 'o' in box
-            
-            if winning state:
-                end game declare winner
-        """
+
         # Update the display
         pygame.display.flip()
 
