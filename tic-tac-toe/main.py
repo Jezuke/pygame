@@ -73,12 +73,19 @@ def add_marker():
         elif(y < CELL_SIZE*4):
             row = 3
         
-        if row and column:
-            if player_turn:
-                markers_x.append((column, row))
-            else:
-                markers_o.append((column, row))
-            player_turn = not player_turn
+        if column and row:
+            if not cell_occupied(column, row):
+                if player_turn:
+                    markers_x.append((column, row))
+                else:
+                    markers_o.append((column, row))
+                player_turn = not player_turn
+
+def cell_occupied(column, row):
+    if (column, row) in markers_o or (column, row) in markers_x:
+        return True
+    return False
+
 # Main loop
 def main():
     global clicked
