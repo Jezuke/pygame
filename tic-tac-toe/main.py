@@ -2,7 +2,11 @@ import pygame
 import math
 import sys
 
-# TODO Recognize win conditions
+"""
+TODO:
+* Add restart button
+* Add dialog that shows whose turn is it
+"""
 
 # Initialize Pygame
 pygame.init()
