@@ -37,7 +37,7 @@ BLACK = (0, 0, 0)
 # Create the display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Centered 3x3 Grid")
-font = pygame.font.Font(size=64)
+font = pygame.font.Font(size=32)
 
 # Global variables
 clicked = False
@@ -90,7 +90,7 @@ def add_marker():
         elif(y < CELL_SIZE*4):
             row = 3
         
-        if column and row:
+        if column and row and not winner:
             if not cell_occupied(column, row):
                 if player_turn:
                     markers_x.append((column, row))
@@ -112,16 +112,21 @@ def check_winner():
             markers_x_set = set(markers_x)
             markers_o_set = set(markers_o)
             
-            if win.issubset(markers_x_set):
+            x_win = win.issubset(markers_x_set)
+            o_win = win.issubset(markers_o_set)
+            if x_win:
                 winner = 'X'
                 return True
-            elif win.issubset(markers_o_set):
+            elif o_win:
                 winner = 'O'
                 return True
+            elif len(markers_x)+len(markers_o) == 9 and not x_win: # Scuffed, but implies Draw since all squares filled up
+                winner = 'DRAW. NOBODY'
+                return True
+ 
 
 def game_over(winner):
     string_text = "GAME OVER: " + winner +" WINS!"
-
     # Center Game Over Dialog above Grid.
     draw_text(string_text, (2,0))
 
