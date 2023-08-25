@@ -10,6 +10,16 @@ TODO:
 # Initialize Pygame
 pygame.init()
 
+# Button class
+class Button:
+    def __init__(self, x, y, image) -> None:
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.center = (x,y)
+
+    def draw(self):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
 # Constants
 SCREEN_WIDTH, SCREEN_HEIGHT = 750, 750
 CELL_SIZE = 150
@@ -37,7 +47,8 @@ BLACK = (0, 0, 0)
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Centered 3x3 Grid")
 font = pygame.font.Font(size=32)
-
+reset_img = pygame.image.load("img/reset_button.png").convert_alpha()
+reset_button = Button(100,100, reset_img)
 # Global variables
 clicked = False
 markers_x = []
@@ -150,7 +161,8 @@ def main():
         print_grid()
         print_markers()
         add_marker()
-        
+        reset_button.draw()
+
         if check_winner():
             game_over(winner)
         
