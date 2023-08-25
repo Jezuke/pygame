@@ -5,7 +5,6 @@ import sys
 """
 TODO:
 * Add restart button
-* Add dialog that shows whose turn is it
 """
 
 # Initialize Pygame
@@ -96,7 +95,7 @@ def add_marker():
                     markers_x.append((column, row))
                 else:
                     markers_o.append((column, row))
-                player_turn = not player_turn
+                player_turn = not player_turn                
 
 def cell_occupied(column, row):
     if (column, row) in markers_o or (column, row) in markers_x:
@@ -144,10 +143,14 @@ def main():
 
         # Clear the screen
         screen.fill(WHITE)
-        
+
+        # Player turn indicator
+        draw_text("TURN: X", (0,2)) if player_turn else draw_text("TURN: O", (0,2))
+
         print_grid()
         print_markers()
         add_marker()
+        
         if check_winner():
             game_over(winner)
         
