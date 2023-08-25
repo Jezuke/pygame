@@ -4,7 +4,8 @@ import sys
 
 """
 TODO:
-* Add restart button
+* Scale reset button
+* Add reset button functionality
 """
 
 # Initialize Pygame
